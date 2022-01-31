@@ -1,3 +1,21 @@
+@font-face {
+    font-family: 'OPPOSANS';
+    src: url('../font/OPPOSans-B.ttf')
+}
 body{
     margin: 0;
+    font-family: 'OPPOSANS';
 }
+.search-icon{
+    background: url('/search3.png');
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size:cover;
+    cursor: pointer;
+}
+:root {
+    /*
+     @primary主题色修改*/
+    --el-color-primary: #25B51D !important;
+  }
