@@ -4,7 +4,11 @@
 }
 body{
     margin: 0;
+}
+#app{
     font-family: 'OPPOSANS';
+    height: 100vh;
+    width: 100%;
 }
 .search-icon{
     background: url('/search3.png');
