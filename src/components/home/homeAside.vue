@@ -9,8 +9,12 @@
     </div>
     <div class="options-wrapper">
             <ul>
-                <li>今日推荐</li>
-                <li>分类</li>
+                <router-link active-class="high-light" to="/">
+                    <li >今日推荐</li>
+                </router-link>
+                <router-link  active-class="high-light" to="/categories">
+                    <li>分类</li>
+                </router-link>
                 <li>收藏</li>
                 <li>我的账号</li>
                 <li>通知</li>
@@ -23,6 +27,14 @@
 
 <style scoped lang="scss">
 .layout-aside {
+  
+  .high-light{
+    color: black;
+  }
+  a{
+    text-decoration: none;
+    color: rgb(143, 142, 142);  
+  }
   .logo-icon {
 
     i {

@@ -23,3 +23,6 @@ body{
      @primary主题色修改*/
     --el-color-primary: #25B51D !important;
   }
+#nprogress .bar{
+    background-color: #25B51D !important;
+}
