@@ -80,7 +80,6 @@ let hotItems = ref([
     .item-card {
       .card-cover {
         height: 140px;
-        width: 14s0px;
         display: inline-block;
         background-color: #fff;
       }
@@ -101,9 +100,10 @@ let hotItems = ref([
   }
   .banner {
     margin: 40px 0;
-    width: 1200px;
+    width: 100%;
     background: url("/banner.png");
     display: inline-block;
+    background-position: center;
     height: 120px;
     background-repeat: no-repeat;
     background-size: contain;

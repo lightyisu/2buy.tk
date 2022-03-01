@@ -26,3 +26,7 @@ body{
 #nprogress .bar{
     background-color: #25B51D !important;
 }
+a{
+    text-decoration: none;
+    color: black;
+}

@@ -13,6 +13,10 @@
       <el-col :span="12"></el-col>
       <el-col :span="4">
         <div class="header-right">
+          <router-link  to="/publish">
+             <span>发布新闲置</span>
+          </router-link>
+            
              <span>登录</span>
              <i class="header-avatar"></i>
         </div>
@@ -37,6 +41,9 @@ let searchVal = ref("");
 .header-right{
   float: right;
   padding: 10px;
+  span{
+    margin-left: 30px;
+  }
   .header-avatar{
     margin-left: 20px;
     vertical-align: middle;
