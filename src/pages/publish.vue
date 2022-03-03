@@ -9,6 +9,9 @@
       <el-form-item label="描述一下你的物品">
         <el-input v-model="form.description" :rows="2" type="textarea" />
       </el-form-item>
+       <el-form-item label="价格">
+        <el-input :style="{width:'100px'}" v-model='form.price'/>
+      </el-form-item>
       <el-form-item label="地点">
         <el-select v-model="form.position" placeholder="选择您的地点">
           <el-option
@@ -46,6 +49,7 @@
           </el-upload>
         </div>
       </el-form-item>
+     
       <el-form-item>
           <el-button type="primary" @click="onSubmit">发布</el-button>
       </el-form-item>
@@ -56,6 +60,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { Plus } from "@element-plus/icons-vue";
+import {postNew} from '../api/home'
 const dialogImageUrl = ref("");
 const dialogVisible = ref(false);
 const handleRemove = (file, fileList) => {};
@@ -68,6 +73,7 @@ const form = reactive({
   description: "",
   position: "",
   categories: "",
+  price:""
 });
 const tag = ref("");
 const postion = ref([
@@ -85,6 +91,15 @@ const categories = ref([
   "房屋租赁",
   "周边",
 ]);
+const onSubmit=()=>{
+  postNew({
+    title:form.title,
+    desc:form.description,
+    position:form.position,
+    categories:form.categories,
+    price:form.price
+  })
+}
 </script>
 
 <style lang="scss" scoped>

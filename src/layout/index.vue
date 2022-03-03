@@ -6,7 +6,10 @@
         <el-header>
           <home-header />
         </el-header>
-        <slot></slot>
+        <el-main>
+           <slot></slot>
+        </el-main>
+       
       </el-container>
     </el-container>
 </div>
@@ -43,6 +46,9 @@ import HomeHeader from "../components/home/homeHeader.vue";
   }
   .el-footer {
     background: chartreuse;
+  }
+  .el-main{
+    padding: 0 !important;
   }
 }
 

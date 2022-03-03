@@ -4,7 +4,7 @@
       <p class="title">分类</p>
       <el-row>
         <el-col v-for="(item, index) in categoriesItem" :key="index" :span="4">
-          <el-card :style="{ width: '70%' }" :body-style="{ padding: '0px' }">
+          <el-card :body-style="{ padding: '0px' }">
             <i class="ctg-cover"></i>
           </el-card>
           <div class="details">
@@ -40,6 +40,8 @@ let categoriesItem = ref([
 
 <style lang="scss" scoped>
 .categories-content {
+  width: 60vw;
+  margin: 0 auto;
   padding: 10px 80px;
   .el-col-4 {
     margin: 20px 40px;
@@ -62,6 +64,10 @@ let categoriesItem = ref([
     display: inline-block;
     height: 240px;
     width: 100%;
+  }
+  .el-card__body{
+    width: 100px;
+    height: 240px;
   }
 }
 </style>

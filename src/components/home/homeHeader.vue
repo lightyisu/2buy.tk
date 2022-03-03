@@ -7,23 +7,22 @@
           v-model="searchVal"
           placeholder="三只松鼠 80g礼包装 / ikbc键盘"
         >
-          <template class="input-suffix" #append> <i class="search-icon"></i> </template>
+          <template class="input-suffix" #append>
+            <i class="search-icon"></i>
+          </template>
         </el-input>
       </el-col>
       <el-col :span="12"></el-col>
       <el-col :span="4">
         <div class="header-right">
-          <router-link  to="/publish">
-             <span>发布新闲置</span>
+          <router-link to="/publish">
+            <span>发布新闲置</span>
           </router-link>
-            
-             <span>登录</span>
-             <i class="header-avatar"></i>
+
+          <span>登录</span>
+          <i class="header-avatar"></i>
         </div>
-    
       </el-col>
-      
-      
     </el-row>
   </div>
 </template>
@@ -34,17 +33,18 @@ let searchVal = ref("");
 </script>
 
 <style scoped lang="scss">
-  :deep(.el-input-group__append) {
-  background-color: #25B51D;
+:deep(.el-input-group__append) {
+  background-color: #25b51d;
   color: #fff;
 }
-.header-right{
+.header-right {
   float: right;
   padding: 10px;
-  span{
+  width: 300px;
+  span {
     margin-left: 30px;
   }
-  .header-avatar{
+  .header-avatar {
     margin-left: 20px;
     vertical-align: middle;
     display: inline-block;
