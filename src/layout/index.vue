@@ -49,6 +49,7 @@ import HomeHeader from "../components/home/homeHeader.vue";
   }
   .el-main{
     padding: 0 !important;
+  
   }
 }
 

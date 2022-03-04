@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="footer">
-      <div>
+      <div class="footer-info">
         <h1>共有10人想要</h1>
         <el-button color="#fff" class="want-btn" type="primary">加入想要</el-button>
       </div>
@@ -101,7 +101,7 @@
     color: #fff;
     font-size: 45px;
   }
-  padding-right: 320px;
+  padding-right: 220px;
   display: flex;
   justify-content: flex-end;
   height: 100%;
