@@ -1,5 +1,6 @@
 <template>
-  <div class="content">
+<div class="wrapper">
+    <div class="content">
     <h1>发布</h1>
     <el-divider class="divider"></el-divider>
     <el-form class="form" ref="formRef" :model="form">
@@ -9,8 +10,8 @@
       <el-form-item label="描述一下你的物品">
         <el-input v-model="form.description" :rows="2" type="textarea" />
       </el-form-item>
-       <el-form-item label="价格">
-        <el-input :style="{width:'100px'}" v-model='form.price'/>
+      <el-form-item label="价格">
+        <el-input :style="{ width: '100px' }" v-model="form.price" />
       </el-form-item>
       <el-form-item label="地点">
         <el-select v-model="form.position" placeholder="选择您的地点">
@@ -41,6 +42,7 @@
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
             :onremove="handleRemove"
+            :on-change="upload"
           >
             <el-icon><plus /></el-icon>
             <el-dialog v-model="dialogVisible">
@@ -49,18 +51,26 @@
           </el-upload>
         </div>
       </el-form-item>
-     
+
       <el-form-item>
-          <el-button type="primary" @click="onSubmit">发布</el-button>
+        <el-button type="primary" @click="onSubmit">发布</el-button>
       </el-form-item>
     </el-form>
+    <el-dialog v-model="dialogVisible1">
+      <el-result icon="success" title="成功发布" sub-title="即将为您导航到主页">
+        <template #extra> 等待{{ countNumber }}s </template>
+      </el-result>
+    </el-dialog>
   </div>
+</div>
+
 </template>
 
 <script setup>
 import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 import { Plus } from "@element-plus/icons-vue";
-import {postNew} from '../api/home'
+import { postNew } from "../api/home";
 const dialogImageUrl = ref("");
 const dialogVisible = ref(false);
 const handleRemove = (file, fileList) => {};
@@ -68,12 +78,17 @@ const handlePictureCardPreview = (file) => {
   dialogImageUrl.value = file.url;
   dialogVisible.value = true;
 };
+const reader=new FileReader();
+const router = useRouter();
+const countNumber = ref("");
+const fileBinary=ref("")
+let dialogVisible1 = ref(false);
 const form = reactive({
   title: "",
   description: "",
   position: "",
   categories: "",
-  price:""
+  price: "",
 });
 const tag = ref("");
 const postion = ref([
@@ -91,21 +106,40 @@ const categories = ref([
   "房屋租赁",
   "周边",
 ]);
-const onSubmit=()=>{
-  postNew({
-    title:form.title,
-    desc:form.description,
-    position:form.position,
-    categories:form.categories,
-    price:form.price
-  })
+const upload=(file)=>{
+  fileBinary.value=file.raw;
 }
+const onSubmit = () => {
+  countNumber.value = 2;
+  const formData=new FormData();
+  formData.append('title',form.title);
+  formData.append('desc',form.description);
+  formData.append('position',form.position);
+  formData.append('categories',form.categories);
+  formData.append('price',form.price);
+  formData.append('file',fileBinary.value)
+  
+  postNew(formData).then(() => {
+    dialogVisible1.value = true;
+    let interval = setInterval(() => {
+      countNumber.value--;
+    }, 1000);
+    setTimeout(() => {
+      router.push("/");
+      clearInterval(interval);
+    }, 2000);
+  });
+};
 </script>
 
+
 <style lang="scss" scoped>
+.wrapper{
+  
+}
 .content {
   width: 50vw;
-  padding: 70px 60px;
+  margin: 80px auto;
   h1 {
     color: #25b51d;
     font-size: 30px;

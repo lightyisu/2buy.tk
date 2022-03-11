@@ -15,3 +15,10 @@ export function postNew(data){
         data
     })
 }
+export function getItemDetail(id){
+    return request({
+        url:'/getItemDetail',
+        method:'get',
+        params:id
+    })
+}

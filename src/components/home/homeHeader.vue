@@ -18,8 +18,10 @@
           <router-link to="/publish">
             <span>发布新闲置</span>
           </router-link>
-
-          <span>登录</span>
+          <router-link to="/login">
+               <span>登录</span>
+          </router-link>
+       
           <i class="header-avatar"></i>
         </div>
       </el-col>

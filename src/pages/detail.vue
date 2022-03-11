@@ -1,23 +1,25 @@
 <template>
   <div class="content">
     <div class="main">
-      <i class="cover"></i>
+      <div class="img-wrapper">
+          <img class="cover-img" :src="detail.imgPath"/>
+      </div>
+    
       <div class="desc">
-        <h1>坚果R2一台</h1>
+        <h1>{{detail.title}}</h1>
         <div class="author">
           <i class="avatar"></i>
-          <span class="author-name">INVU</span>
+          <span class="author-name">{{detail.author}}</span>
         </div>
         <div class="categories">
-          <span>手机数码</span>
+          <span>{{detail.categories}}</span>
         </div>
         <div class="desc-detail">
           <p>
-            8+256GB 全新一台坚果手机 买了三个月 有盒子 成色如图 手机无暗病
-            高通骁龙865处理器
+            {{detail.description}}
           </p>
-          <p>发布于 安庆师范大学龙山校区</p>
-          <p class="price">￥2600</p>
+          <p>发布于 {{detail.position}}</p>
+          <p class="price">￥{{detail.price}}</p>
         </div>
       </div>
     </div>
@@ -30,7 +32,22 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import {onMounted,ref} from 'vue';
+import {getItemDetail} from '../api/home'
+import {useRoute} from 'vue-router'
+let route=useRoute();
+let detail=ref('')
+
+onMounted(()=>{
+  getItemDetail({
+    id:route.params.id
+  }).then((res)=>{
+    console.log(res);
+    detail.value=res.data.results[0]
+  })
+})
+</script>
 
 <style lang="scss" scoped>
 .content {
@@ -42,6 +59,17 @@
   padding: 40px 0px;
   display: flex;
   justify-content: center;
+.img-wrapper{
+  width: 300px;
+  .cover-img{
+    width: auto;
+    height: auto;
+   max-height: 100%;
+   max-width: 100%;
+   border-radius: 10px;
+  }
+}
+
 }
 
 .categories {
@@ -97,15 +125,18 @@
   background-color: lightgray;
 }
 .footer {
+  .footer-info{
+    padding: 60px;
+  }
   h1 {
     color: #fff;
-    font-size: 45px;
+    font-size: 35px;
   }
   padding-right: 220px;
   display: flex;
   justify-content: flex-end;
   height: 100%;
-  margin-top: 100px;
+ 
   background-color: #25b51d;
   .want-btn{
     color: #25b51d;
