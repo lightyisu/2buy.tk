@@ -1,64 +1,76 @@
 <template>
   <el-scrollbar>
     <div class="main-content">
-      <div class="wrapper">
-        <div class="recommend-title">
-          <span>推荐商品</span>
-          <move-btn
-            @move-next="moveNext1"
-            @move-previous="movePrevious1"
-          ></move-btn>
-        </div>
-        <div class="recommend-content" ref="moveContent1">
-          <div
-            class="recommend-card"
-            v-for="(item, index) in recommendItems"
-            :key="index"
-          >
-            <router-link :to="'/item/' + item.id">
-              <i class="item-cover" :style="bgImg(item.imgPath)"></i>
+      <div class="middle-content">
+        <div class="wrapper">
+          <div class="recommend-title">
+            <span>推荐商品</span>
+            <move-btn
+              :count="slideLeft1"
+              @move-next="moveNext1"
+              @move-previous="movePrevious1"
+            ></move-btn>
+          </div>
+          <div class="recommend-content" :style="{left:slideLeft1+'px'}">
+            <div
+              class="recommend-card"
+              v-for="(item, index) in recommendItems"
+              :key="index"
+            >
+              <router-link :to="'/item/' + item.id">
+                <i class="item-cover" :style="bgImg(item.imgPath)"></i>
 
+                <p class="item-title">{{ item.title }}</p>
+                <p class="item-author">{{ item.author }}</p>
+              </router-link>
+
+              <el-button size="small" round>{{ item.categories }}</el-button>
+            </div>
+          </div>
+        </div>
+
+        <i class="banner"></i>
+        <div class="wrapper">
+          <div class="recommend-title">
+            <span>最受关注商品</span>
+            <move-btn
+              :count="slideLeft2"
+              @move-next="moveNext2"
+              @move-previous="movePrevious2"
+            ></move-btn>
+          </div>
+
+          <div class="recommend-content" :style="{left:slideLeft2+'px'}">
+            <div
+              class="item-card"
+              v-for="(item, index) in hotItems"
+              :key="index"
+            >
+              <i class="card-cover" :style="bgImg(item.imgPath)"></i>
               <p class="item-title">{{ item.title }}</p>
-              <p class="item-author">{{ item.author }}</p>
-            </router-link>
-
-            <el-button size="small" round>{{ item.categories }}</el-button>
+              <p :style="{ fontSize: '8px', color: 'gray' }">
+                {{ item.author }}
+              </p>
+              <p class="card-price">￥{{ item.price }}</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <i class="banner"></i>
-      <div class="wrapper">
-        <div class="recommend-title">
-          <span>最受关注商品</span>
-           <move-btn
-            @move-next="moveNext2"
-            @move-previous="movePrevious2"
-          ></move-btn>
+        <div class="recommend-footer">
+          <el-divider></el-divider>
+          <p>
+            Producted By <span style="color: #25b51d">2Buy</span>.tk In 2022
+          </p>
+          <p>Powered By Vue3 / ElementPlus</p>
+          <p>In Dev Process</p>
         </div>
-
-        <div class="recommend-content" ref="moveContent2">
-          <div class="item-card" v-for="(item, index) in hotItems" :key="index">
-            <i class="card-cover" :style="bgImg(item.imgPath)"></i>
-            <p class="item-title">{{ item.title }}</p>
-            <p :style="{ fontSize: '8px', color: 'gray' }">{{ item.author }}</p>
-            <p class="card-price">￥{{ item.price }}</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="recommend-footer">
-        <el-divider></el-divider>
-        <p>Producted By <span style="color: #25b51d">2Buy</span>.tk In 2022</p>
-        <p>Powered By Vue3 / ElementPlus</p>
-        <p>In Dev Process</p>
       </div>
     </div>
   </el-scrollbar>
 </template>
 
 <script setup>
-import { ref, onMounted, resolveDirective } from "vue";
+import { ref, onMounted } from "vue";
 import { getRecommendItemList } from "../../api/home";
 import moveBtn from "../utilCompon/move-btn.vue";
 import MoveBtn from "../utilCompon/move-btn.vue";
@@ -68,11 +80,11 @@ onMounted(() => {
     hotItems.value = res.data.results;
   });
 });
-
+let slideLeft1=ref(0);
+let slideLeft2=ref(0)
 let recommendItems = ref("");
 let hotItems = ref("");
-let moveContent1 = ref("");
-let moveContent2=ref("")
+
 let bgImg = (url) => {
   url = "url('" + encodeURI(url) + "')";
 
@@ -83,27 +95,42 @@ let bgImg = (url) => {
   };
 };
 let moveNext1 = () => {
-  moveContent1.value.style.transform = "translateX(-100%)";
+  if(-slideLeft1.value<(recommendItems.value.length-6)*180){
+      slideLeft1.value-=180;
+  }
+  
+
 };
 let movePrevious1 = () => {
-  moveContent1.value.style.transform = "translateX(0px)";
+  if(slideLeft1.value!=0){
+     slideLeft1.value+=180;
+  }
+
 };
 let moveNext2 = () => {
-  moveContent2.value.style.transform = "translateX(-100%)";
+   if(-slideLeft2.value<(recommendItems.value.length-6)*190){
+      slideLeft2.value-=190;
+  }
 };
 let movePrevious2 = () => {
-  moveContent2.value.style.transform = "translateX(0px)";
+  if(slideLeft2.value!=0){
+     slideLeft2.value+=190;
+  }
+
 };
+
 </script>
 
 <style scoped lang="scss">
 .main-content {
-  display: flex;
-  flex-direction: column;
+  
 
   width: 100%;
   height: 100%;
-
+  .middle-content{
+    margin: 0 auto;
+    width: 1400px;
+  }
   .recommend-title {
     padding: 30px;
   }
@@ -118,13 +145,13 @@ let movePrevious2 = () => {
   }
   .wrapper {
     overflow: hidden;
-    width: 80%;
+    width: 100%;
     align-self: center;
   }
   .recommend-content {
-    transition: transform 1s ease;
-    align-self: center;
-
+    position: relative;
+    transition: left .6s ease;
+    
     display: flex;
     flex-wrap: nowrap;
 
@@ -178,10 +205,10 @@ let movePrevious2 = () => {
     }
   }
   .banner {
-    align-self: center;
+ 
     margin: 30px 0px;
     padding: 20px 0px;
-    width: 90%;
+    width: 100%;
     background: url("/banner.png");
     display: inline-block;
     background-position: center;

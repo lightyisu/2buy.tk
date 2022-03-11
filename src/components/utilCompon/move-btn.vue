@@ -1,32 +1,28 @@
 <template>
   <div class="move-btn">
-    {{ moveCount }}/2
-    <el-icon class="left-icon move-icon" color="#daddda" @click="movePrevious"
+    
+    <el-icon class="left-icon move-icon" :style="{color:count==0?'#daddda':''}" @click="movePrevious"
       ><arrow-left-bold
     /></el-icon>
     <el-icon class="right-icon move-icon" @click="moveNext"
       ><arrow-right-bold
     /></el-icon>
+ 
   </div>
 </template>
 
 <script setup>
 import { ArrowRightBold, ArrowLeftBold } from "@element-plus/icons-vue";
-import { ref,defineEmits} from "vue";
-let moveCount = ref(1);
+import { ref,defineEmits,defineProps} from "vue";
+const props=defineProps(['count'])
 const emit=defineEmits(['movePrevious','moveNext'])
 let movePrevious = () => {
   console.log("previous");
-  if (moveCount.value != 1) {
-    moveCount.value--;
-  }
+
   emit('movePrevious');
 };
 let moveNext = () => {
- 
-  if (moveCount.value != 2) {
-    moveCount.value++;
-  }
+
   emit('moveNext')
 };
 </script>
